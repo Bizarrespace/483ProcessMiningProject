@@ -20,7 +20,7 @@ from tensorflow.keras.layers import Dropout, Dense, Input, BatchNormalization, c
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
 from pydream.util.TimedStateSamples import TimedStateSample
-from tensorflow.keras.optimizers.legacy import RMSprop
+from tensorflow.keras.optimizers.legacy import Adamax
 import itertools
 import tensorflow as tf
 
@@ -44,7 +44,7 @@ class NAP:
                      "n_batch_size" : 10,
                      "dropout_rate" : 0.2, # updated from 0.2 to 0.1
                      "eval_size" : 0.1,
-                     "activation_function" : "relu"}
+                     "activation_function" : "selu"}
         self.setSeed()
 
         if options is not None:
@@ -144,7 +144,7 @@ class NAP:
             z = Dense(outsize, activation='softmax')(z)
 
             self.model = Model(inputs=[x.input, y.input, s.input], outputs=z)
-            self.model.compile(loss='categorical_crossentropy', optimizer=RMSprop(), metrics=['accuracy'])  # , metrics.Precision, metrics.Recall])
+            self.model.compile(loss='categorical_crossentropy', optimizer=Adamax(), metrics=['accuracy'])  # , metrics.Precision, metrics.Recall])
             #self.model.compile(loss=['categorical_crossentropy', auc_loss], loss_weights = [0.5, 0.5], optimizer=optm, metrics=['accuracy']) #, metrics.Precision, metrics.Recall])
             #self.model.compile(loss=auc_loss, optimizer=optm, metrics=['accuracy'])
 
