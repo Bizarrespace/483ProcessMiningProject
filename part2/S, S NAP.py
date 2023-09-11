@@ -113,6 +113,8 @@ class NAP:
             x = Dropout(self.opts["dropout_rate"])(x)
             x = Dense(100, activation=self.opts["activation_function"])(x)
             x = Dropout(self.opts["dropout_rate"])(x)
+            x = Dense(50, activation=self.opts["activation_function"])(x)
+            x = Dropout(self.opts["dropout_rate"])(x)
             x = Model(inputs=inputA, outputs=x)
 
             # the second branch opreates on the second input
@@ -141,6 +143,7 @@ class NAP:
             z = Dense(32, activation="relu")(combined)
             #z = Dropout(0.2)(z)
             z = Dense(16, activation="relu")(z)
+            z = Dense(128, activation="relu")(z)
             z = Dense(outsize, activation='softmax')(z)
 
             self.model = Model(inputs=[x.input, y.input, s.input], outputs=z)
